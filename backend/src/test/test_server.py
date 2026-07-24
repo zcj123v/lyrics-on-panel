@@ -1,5 +1,6 @@
 import json
 import asyncio
+import sys
 
 BASE = "ws://localhost:23560"
 
@@ -42,11 +43,13 @@ async def check_control_spotify():
         await ws.send('{"action": "pause", "player": "org.mpris.MediaPlayer2.spotify"}')
 
 
-def main():
+def main(arguments=None):
+    arguments = sys.argv[1:] if arguments is None else arguments
     asyncio.run(check_healthcheck())
     asyncio.run(check_poll())
-    asyncio.run(check_control_ypm())
-    asyncio.run(check_control_spotify())
+    if "--with-controls" in arguments:
+        asyncio.run(check_control_ypm())
+        asyncio.run(check_control_spotify())
 
 
 if __name__ == "__main__":
