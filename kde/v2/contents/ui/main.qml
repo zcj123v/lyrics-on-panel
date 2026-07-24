@@ -6,6 +6,7 @@ import QtWebSockets
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.components 3.0 as PlasmaComponents
+import org.kde.kirigami 2.20 as Kirigami
 
 /**
  * Lyrics on Panel for KDE Plasma 6 - v2.0.0
@@ -101,7 +102,7 @@ PlasmoidItem {
             Text {
                 id: lyricText
                 text: currentLyric || lrc_not_exists
-                color: config_lyricTextColor
+                color: effectiveLyricTextColor
                 font.pixelSize: config_lyricTextSize
                 font.bold: config_lyricTextBold
                 font.italic: config_lyricTextItalic
@@ -139,10 +140,12 @@ PlasmoidItem {
             Layout.rightMargin: 1
             spacing: config_mediaControllSpacing
 
-            Image {
+            Kirigami.Icon {
                 source: backwardIcon
-                sourceSize.width: config_mediaControllItemSize
-                sourceSize.height: config_mediaControllItemSize
+                Layout.preferredWidth: config_mediaControllItemSize
+                Layout.preferredHeight: config_mediaControllItemSize
+                isMask: true
+                color: effectiveMediaControlIconColor
 
                 MouseArea {
                     anchors.fill: parent
@@ -150,10 +153,12 @@ PlasmoidItem {
                 }
             }
 
-            Image {
+            Kirigami.Icon {
                 source: (playbackStatus === "playing") ? pauseIcon : playIcon
-                sourceSize.width: config_mediaControllItemSize
-                sourceSize.height: config_mediaControllItemSize
+                Layout.preferredWidth: config_mediaControllItemSize
+                Layout.preferredHeight: config_mediaControllItemSize
+                isMask: true
+                color: effectiveMediaControlIconColor
 
                 MouseArea {
                     anchors.fill: parent
@@ -161,10 +166,12 @@ PlasmoidItem {
                 }
             }
 
-            Image {
+            Kirigami.Icon {
                 source: forwardIcon
-                sourceSize.width: config_mediaControllItemSize
-                sourceSize.height: config_mediaControllItemSize
+                Layout.preferredWidth: config_mediaControllItemSize
+                Layout.preferredHeight: config_mediaControllItemSize
+                isMask: true
+                color: effectiveMediaControlIconColor
 
                 MouseArea {
                     anchors.fill: parent
@@ -172,10 +179,12 @@ PlasmoidItem {
                 }
             }
 
-            Image {
+            Kirigami.Icon {
                 source: liked ? likedIcon : likeIcon
-                sourceSize.width: config_mediaControllItemSize
-                sourceSize.height: config_mediaControllItemSize
+                Layout.preferredWidth: config_mediaControllItemSize
+                Layout.preferredHeight: config_mediaControllItemSize
+                isMask: !liked
+                color: effectiveMediaControlIconColor
 
                 MouseArea {
                     anchors.fill: parent
@@ -183,11 +192,13 @@ PlasmoidItem {
                 }
             }
 
-            Image {
+            Kirigami.Icon {
                 id: mediaPlayerIcon
                 source: config_yesPlayMusicChecked ? cloudMusicIcon : spotifyIcon
-                sourceSize.width: config_mediaControllItemSize
-                sourceSize.height: config_mediaControllItemSize
+                Layout.preferredWidth: config_mediaControllItemSize
+                Layout.preferredHeight: config_mediaControllItemSize
+                isMask: true
+                color: effectiveMediaControlIconColor
 
                 MouseArea {
                     anchors.fill: parent
@@ -257,15 +268,22 @@ PlasmoidItem {
         }
     }
 
-    property string backwardIcon: config_whiteMediaControlIconsChecked ? "../assets/media-backward-white.svg" : "../assets/media-backward.svg"
-    property string pauseIcon: config_whiteMediaControlIconsChecked ? "../assets/media-pause-white.svg" : "../assets/media-pause.svg"
-    property string forwardIcon: config_whiteMediaControlIconsChecked ? "../assets/media-forward-white.svg" : "../assets/media-forward.svg"
-    property string likeIcon: config_whiteMediaControlIconsChecked ? "../assets/media-like-white.svg" : "../assets/media-like.svg"
+    property string backwardIcon: "../assets/media-backward.svg"
+    property string pauseIcon: "../assets/media-pause.svg"
+    property string forwardIcon: "../assets/media-forward.svg"
+    property string likeIcon: "../assets/media-like.svg"
     property string likedIcon: "../assets/media-liked.svg"
-    property string cloudMusicIcon: config_whiteMediaControlIconsChecked ? "../assets/netease-cloud-music-white.svg" : "../assets/netease-cloud-music.svg"
-    property string spotifyIcon: config_whiteMediaControlIconsChecked ? "../assets/spotify-white.svg" : "../assets/spotify.svg"
-    property string playIcon: config_whiteMediaControlIconsChecked ? "../assets/media-play-white.svg" : "../assets/media-play.svg"
+    property string cloudMusicIcon: "../assets/netease-cloud-music.svg"
+    property string spotifyIcon: "../assets/spotify.svg"
+    property string playIcon: "../assets/media-play.svg"
     property bool liked: false
+
+    property color effectiveLyricTextColor: config_useCustomColorsChecked
+        ? config_lyricTextColor
+        : PlasmaCore.Theme.textColor
+    property color effectiveMediaControlIconColor: config_useCustomColorsChecked
+        ? (config_whiteMediaControlIconsChecked ? "#ffffff" : "#000000")
+        : PlasmaCore.Theme.textColor
 
     property bool config_yesPlayMusicChecked: Plasmoid.configuration.yesPlayMusicChecked
     property bool config_lxMusicChecked: Plasmoid.configuration.lxMusicChecked
@@ -273,7 +291,8 @@ PlasmoidItem {
     property bool config_compatibleModeChecked: Plasmoid.configuration.compatibleModeChecked
 
     property int config_lyricTextSize: Plasmoid.configuration.lyricTextSize
-    property string config_lyricTextColor: Plasmoid.configuration.lyricTextColor
+    property color config_lyricTextColor: Plasmoid.configuration.lyricTextColor
+    property bool config_useCustomColorsChecked: Plasmoid.configuration.useCustomColorsChecked
     property bool config_lyricTextBold: Plasmoid.configuration.lyricTextBold
     property bool config_lyricTextItalic: Plasmoid.configuration.lyricTextItalic
     property int config_lyricTextVerticalOffset: Plasmoid.configuration.lyricTextVerticalOffset

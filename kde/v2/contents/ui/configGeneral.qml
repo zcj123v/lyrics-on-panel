@@ -16,6 +16,7 @@ Kirigami.FormLayout {
 
     property alias cfg_lyricTextSize: lyricTextSizeSpinBox.value 
     property alias cfg_lyricTextColor: lyricTextColorButton.color
+    property alias cfg_useCustomColorsChecked: useCustomColorsChecked.checked
     property alias cfg_lyricTextBold: boldButton.checked   
     property alias cfg_lyricTextItalic: italicButton.checked 
     property alias cfg_lyricTextVerticalOffset: lyricTextVerticalOffsetSpinBox.value
@@ -86,11 +87,18 @@ Kirigami.FormLayout {
         Kirigami.FormData.label: i18n("Media control items vertical offset: ")
     }
     
+    QQC2.CheckBox {
+        id: useCustomColorsChecked
+        Kirigami.FormData.label: i18n("Use Custom Text and Icon Colors: ")
+        checkable: true
+    }
+
     QQLayouts.RowLayout {
         Kirigami.FormData.label: i18n("Lyric text color: ")
 
         KQControls.ColorButton {
             id: lyricTextColorButton
+            enabled: useCustomColorsChecked.checked
         }
 
         QQC2.Button {
@@ -116,6 +124,7 @@ Kirigami.FormLayout {
         id: whiteMediaControlIconsChecked
         Kirigami.FormData.label: i18n("White Media Control Icons: ")
         checkable: true
+        enabled: useCustomColorsChecked.checked
     }
 
     QQC2.TextField {
