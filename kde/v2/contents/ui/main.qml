@@ -268,14 +268,14 @@ PlasmoidItem {
         }
     }
 
-    property string backwardIcon: "../assets/media-backward.svg"
-    property string pauseIcon: "../assets/media-pause.svg"
-    property string forwardIcon: "../assets/media-forward.svg"
-    property string likeIcon: "../assets/media-like.svg"
-    property string likedIcon: "../assets/media-liked.svg"
-    property string cloudMusicIcon: "../assets/netease-cloud-music.svg"
-    property string spotifyIcon: "../assets/spotify.svg"
-    property string playIcon: "../assets/media-play.svg"
+    property url backwardIcon: Qt.resolvedUrl("../assets/media-backward.svg")
+    property url pauseIcon: Qt.resolvedUrl("../assets/media-pause.svg")
+    property url forwardIcon: Qt.resolvedUrl("../assets/media-forward.svg")
+    property url likeIcon: Qt.resolvedUrl("../assets/media-like.svg")
+    property url likedIcon: Qt.resolvedUrl("../assets/media-liked.svg")
+    property url cloudMusicIcon: Qt.resolvedUrl("../assets/netease-cloud-music.svg")
+    property url spotifyIcon: Qt.resolvedUrl("../assets/spotify.svg")
+    property url playIcon: Qt.resolvedUrl("../assets/media-play.svg")
     property bool liked: false
 
     property color effectiveLyricTextColor: config_useCustomColorsChecked

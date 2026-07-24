@@ -65,6 +65,23 @@ class PlasmaThemeConfigurationTest(unittest.TestCase):
         self.assertIn("id: useCustomColorsChecked", self.config_qml)
         self.assertIn("enabled: useCustomColorsChecked.checked", self.config_qml)
 
+    def test_bundled_svg_icons_are_resolved_as_urls(self):
+        icon_properties = (
+            "backwardIcon",
+            "pauseIcon",
+            "forwardIcon",
+            "likeIcon",
+            "likedIcon",
+            "cloudMusicIcon",
+            "spotifyIcon",
+            "playIcon",
+        )
+        for property_name in icon_properties:
+            self.assertRegex(
+                self.main_qml,
+                rf'property url {property_name}: Qt\.resolvedUrl\("\.\./assets/[^"\n]+\.svg"\)',
+            )
+
 
 if __name__ == "__main__":
     unittest.main()
