@@ -280,10 +280,10 @@ PlasmoidItem {
 
     property color effectiveLyricTextColor: config_useCustomColorsChecked
         ? config_lyricTextColor
-        : PlasmaCore.Theme.textColor
+        : Kirigami.Theme.textColor
     property color effectiveMediaControlIconColor: config_useCustomColorsChecked
         ? (config_whiteMediaControlIconsChecked ? "#ffffff" : "#000000")
-        : PlasmaCore.Theme.textColor
+        : Kirigami.Theme.textColor
 
     property bool config_yesPlayMusicChecked: Plasmoid.configuration.yesPlayMusicChecked
     property bool config_lxMusicChecked: Plasmoid.configuration.lxMusicChecked

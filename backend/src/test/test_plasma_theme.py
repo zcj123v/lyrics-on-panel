@@ -47,10 +47,11 @@ class PlasmaThemeConfigurationTest(unittest.TestCase):
             self.main_qml,
             re.compile(
                 r"property color effectiveLyricTextColor:.*?"
-                r"PlasmaCore\.Theme\.textColor",
+                r"Kirigami\.Theme\.textColor",
                 re.DOTALL,
             ),
         )
+        self.assertNotIn("PlasmaCore.Theme.textColor", self.main_qml)
         self.assertIn("color: effectiveLyricTextColor", self.main_qml)
         self.assertIn("property color effectiveMediaControlIconColor:", self.main_qml)
         self.assertGreaterEqual(self.main_qml.count("Kirigami.Icon {"), 5)
